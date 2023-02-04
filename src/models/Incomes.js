@@ -6,7 +6,8 @@ const Incomes = sequelizeConnection.define('incomes', {
   name: { type: DataTypes.STRING, allowNull: false },
   value: { type: DataTypes.INTEGER, allowNull: false },
   state: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
-  user_created: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 }
+  user_created: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
+  description: { type: DataTypes.STRING, allowNull: true }
 
 }, {
   tableName: 'incomes'
