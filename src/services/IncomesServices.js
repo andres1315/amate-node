@@ -1,6 +1,12 @@
 import { Incomes } from '../models/Incomes.js'
-const getIncomesDb = () => {
-  return Incomes.findAll()
+
+const getIncomesDb = ({ whereClause = {} } = {}) => {
+  return Incomes.findAll({
+    where: {
+      state: 1,
+      ...whereClause
+    }
+  })
 }
 
 const createNewIncome = ({ paramCreate }) => {
