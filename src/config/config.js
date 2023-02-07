@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import mysql2 from 'mysql2'
 dotenv.config()
 export default {
   development: {
@@ -7,7 +8,8 @@ export default {
     database: process.env.DB_NAME || 'railway',
     host: process.env.DB_HOST || 'containers-us-west-28.railway.app',
     port: process.env.DB_PORT || 5889,
-    dialect: 'mysql'
+    dialect: 'mysql',
+    dialectModule: mysql2
   },
   test: {
     username: 'root',
