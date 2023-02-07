@@ -5,8 +5,7 @@ const sequelizeConnection = new Sequelize(config.dbName, config.dbUser, config.d
   host: config.dbHost,
   dialect: 'mysql',
   port: config.dbPort,
-  timezone: '-05:00',
-  dialectModule :
+  timezone: '-05:00'
 })
 
 export {
