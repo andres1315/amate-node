@@ -7,11 +7,10 @@ const loginUser = async (req, res, next) => {
     const { username, password } = req.body
     if (!username || !password) return res.status(400).json({ message: 'Username and password are required', data: [{ username, password }] })
     const user = await getUsersDb({ username })
-
     const validatePassword = !user ? false : await bcrypt.compare(password, user.password)
     if (!(user && validatePassword)) return res.status(401).json({ message: 'invalid username or password', data: [] })
     const userForToken = { ...user }
-    const token = jwt.sign(userForToken, config.secret, { expiresIn: 60 * 60 * 24 * 7 })
+    const token = jwt.sign(userForToken, config.secret, { expiresIn: 60 * 60 * 24 })
     return res.status(200).json({ message: 'User found', data: { name: `${user.first_name} ${user.last_name}`, token, username } })
   } catch (err) {
     next(err)
