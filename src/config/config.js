@@ -3,11 +3,11 @@ import mysql2 from 'mysql2'
 dotenv.config()
 export default {
   development: {
-    username: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || 'WAZ5zE4cYV6qZwTUCMKT',
-    database: process.env.DB_NAME || 'railway',
-    host: process.env.DB_HOST || 'containers-us-west-28.railway.app',
-    port: process.env.DB_PORT || 5889,
+    username: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
     dialect: 'mysql',
     dialectModule: mysql2
   },
