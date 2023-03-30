@@ -9,7 +9,7 @@ const validateToken = ({ authorization }) => {
   try {
     const decodedToken = token ? jwt.verify(token, config.secret) : {}
     if (!token || !decodedToken?.id) return { message: 'token missing or invalid', data: [], status: 401, success: false }
-    return { success: true }
+    return { success: true, decodedToken }
   } catch (err) {
     return { message: 'token missing or invalid', data: [], status: 401, success: false }
   }

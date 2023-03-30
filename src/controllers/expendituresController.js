@@ -37,10 +37,10 @@ const createExpenditures = async (req, res, next) => {
     if (!validateTokenResult.success) return res.status(validateTokenResult.status).json({ message: validateTokenResult.message, success: validateTokenResult.success })
     const { supplier, description, value } = req.body
     if (!supplier || !description || !value) return res.status(400).json({ message: 'No se recibieron todos los campos requeridos', success: false })
-    const newExpenditure = { supplier, description, value }
+    const newExpenditure = { supplier, description, value, userCreated: validateTokenResult.decodedToken.id }
     console.log(newExpenditure)
     const expenditure = await createExpendituresDb({ newExpenditure })
-    return res.status(200).json({ data: expenditure, message: 'success' })
+    return res.status(201).json({ data: expenditure, message: 'success' })
   } catch (error) {
     next(error)
   }

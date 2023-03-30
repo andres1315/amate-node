@@ -5,10 +5,11 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('incomes', {
       id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-      name: { type: Sequelize.STRING, allowNull: false },
+      description: { type: Sequelize.STRING, allowNull: false },
       value: { type: Sequelize.INTEGER, allowNull: false },
+      customer: { type: Sequelize.INTEGER, allowNull: false },
       state: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 1 },
-      user_created: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 1 },
+      userCreated: { type: Sequelize.INTEGER, allowNull: false },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

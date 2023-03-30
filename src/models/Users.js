@@ -8,7 +8,7 @@ const Users = sequelizeConnection.define('users', {
   username: { type: DataTypes.STRING, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
   state: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
-  user_created: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 }
+  userCreated: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 }
 
 }, {
   tableName: 'users'

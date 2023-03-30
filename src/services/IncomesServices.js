@@ -1,3 +1,4 @@
+import { Customers } from '../models/Customers.js'
 import { Incomes } from '../models/Incomes.js'
 
 const getIncomesDb = ({ whereClause = {} } = {}) => {
@@ -5,7 +6,13 @@ const getIncomesDb = ({ whereClause = {} } = {}) => {
     where: {
       state: 1,
       ...whereClause
-    }
+    },
+    include: [
+      {
+        model: Customers,
+        as: 'customerDetail'
+      }
+    ]
   })
 }
 
@@ -14,8 +21,16 @@ const createNewIncome = ({ paramCreate }) => {
     ...paramCreate
   })
 }
+const deleteIncomeService = ({ id, transaction }) => {
+  return Incomes.destroy({
+    where: {
+      id
+    }
+  }, { transaction })
+}
 
 export {
   getIncomesDb,
-  createNewIncome
+  createNewIncome,
+  deleteIncomeService
 }

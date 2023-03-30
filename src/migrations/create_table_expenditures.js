@@ -7,9 +7,9 @@ module.exports = {
       id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
       description: { type: Sequelize.STRING, allowNull: false },
       value: { type: Sequelize.INTEGER, allowNull: false },
-      supplier: { type: Sequelize.STRING, allowNull: false },
+      supplier: { type: Sequelize.INTEGER, allowNull: false },
       state: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 1 },
-      user_created: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 1 },
+      userCreated: { type: Sequelize.INTEGER, allowNull: false },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
