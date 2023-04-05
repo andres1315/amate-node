@@ -10,6 +10,7 @@ module.exports = {
       customer: { type: Sequelize.INTEGER, allowNull: false },
       state: { type: Sequelize.INTEGER, allowNull: false, defaultValue: 1 },
       userCreated: { type: Sequelize.INTEGER, allowNull: false },
+      isAccounted: { type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false, field: 'is_accounted' },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -1,13 +1,16 @@
-import { sequelizeConnection } from '../database/db'
-import { DataTypesypes } from 'sequelize'
+import { sequelizeConnection } from '../database/db.js'
+import { DataTypes } from 'sequelize'
 
-export const AccountingPeriod = sequelizeConnection.define('AccountingPeriod', {
-  id: { type: DataTypesypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
-  month: { type: DataTypesypes.INTEGER, allowNull: false },
-  year: { type: DataTypesypes.INTEGER, allowNull: false },
-  state: { type: DataTypesypes.INTEGER, allowNull: false, defaultValue: 1 },
-  open: { type: DataTypesypes.BOOLEAN, allowNull: false, defaultValue: false },
-  userCreated: { type: DataTypesypes.INTEGER, allowNull: false },
-  userOpen: { type: DataTypesypes.INTEGER, allowNull: true },
-  userClose: { type: DataTypesypes.INTEGER, allowNull: true }
+export const AccountingPeriod = sequelizeConnection.define('accounting_period', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
+  month: { type: DataTypes.INTEGER, allowNull: false },
+  year: { type: DataTypes.INTEGER, allowNull: false },
+  state: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
+  open: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+  userCreated: { type: DataTypes.INTEGER, allowNull: false },
+  userOpen: { type: DataTypes.INTEGER, allowNull: true },
+  userClose: { type: DataTypes.INTEGER, allowNull: true }
+},
+{
+  tableName: 'accounting_period'
 })

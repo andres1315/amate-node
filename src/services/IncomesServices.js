@@ -29,8 +29,20 @@ const deleteIncomeService = ({ id, transaction }) => {
   }, { transaction })
 }
 
+const updateIncomeService = ({ id, paramUpdate, transaction }) => {
+  return Incomes.update({
+    ...paramUpdate
+  }, {
+    where: {
+      id
+    },
+    transaction
+  })
+}
+
 export {
   getIncomesDb,
   createNewIncome,
-  deleteIncomeService
+  deleteIncomeService,
+  updateIncomeService
 }

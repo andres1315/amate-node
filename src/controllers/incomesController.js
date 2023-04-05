@@ -1,4 +1,4 @@
-import { getIncomesDb, createNewIncome, deleteIncomeService } from '../services/IncomesServices.js'
+import { getIncomesDb, createNewIncome, deleteIncomeService, updateIncomeService } from '../services/IncomesServices.js'
 import { validateToken } from '../utils/utils.js'
 import { Op } from 'sequelize'
 import { sequelizeConnection } from '../database/db.js'
@@ -59,10 +59,24 @@ const deleteIncome = async (req, res, next) => {
     next(error)
   }
 }
+const updateIncome = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const { value, description } = req.body
+    if (!id || !value || !description) return res.status(400).json({ message: 'id, value and description are required', data: [] })
+    const resultTransaction = await sequelizeConnection.transaction(async t => {
+      return await updateIncomeService({ id, paramUpdate: { value, description }, transaction: t })
+    })
+    return res.status(200).json({ message: 'successfully', data: resultTransaction })
+  } catch (error) {
+    next(error)
+  }
+}
 
 export {
   createIncome,
   getIncomes,
   getIncomesCurrentMonth,
-  deleteIncome
+  deleteIncome,
+  updateIncome
 }

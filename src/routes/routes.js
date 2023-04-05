@@ -5,6 +5,7 @@ import { routesExpenditures } from './routesExpenditures.js'
 import { routesCustomers } from './routesCustomers.js'
 import { routesSupplier } from './routesSuppliers.js'
 import { validateToken } from '../utils/utils.js'
+import { routesAccountingPeriods } from './routesAccountingPeriods.js'
 
 export const routes = (app) => {
   app.get('/', (req, res, next) => {
@@ -29,4 +30,5 @@ export const routes = (app) => {
   app.use('/api/expenditures', routesExpenditures)
   app.use('/api/customers', routesCustomers)
   app.use('/api/suppliers', verifyToken, routesSupplier)
+  app.use('/api/accounting-periods', verifyToken, routesAccountingPeriods)
 }

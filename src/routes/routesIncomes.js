@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getIncomes, createIncome, getIncomesCurrentMonth, deleteIncome } from '../controllers/incomesController.js'
+import { getIncomes, createIncome, getIncomesCurrentMonth, deleteIncome, updateIncome } from '../controllers/incomesController.js'
 const routesIncomes = Router()
 
 routesIncomes
@@ -7,6 +7,7 @@ routesIncomes
   .get('/currentMonth', getIncomesCurrentMonth)
   .post('/', createIncome)
   .delete('/:id', deleteIncome)
+  .patch('/:id', updateIncome)
 
 export {
   routesIncomes
