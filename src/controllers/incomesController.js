@@ -22,7 +22,24 @@ const getIncomes = async (req, res, next) => {
     const authorization = req.get('authorization')
     const validateTolkenResult = validateToken({ authorization })
     if (!validateTolkenResult.success) return res.status(validateTolkenResult.status).json({ message: validateTolkenResult.message })
-    const incomes = await getIncomesDb()
+    const { month, year } = req.params
+    let whereClause = {}
+    if (year && month) {
+      const lastDayMonth = new Date(year, Number(month) + 1, 0).getDate()
+      console.log(year)
+      console.log(month)
+      console.log(lastDayMonth)
+      const startDate = new Date(year, month, 1)
+      const endDate = new Date(year, month, lastDayMonth, 23, 59, 59, 999)
+      whereClause = {
+        createdAt: {
+          [Op.gte]: startDate,
+          [Op.lte]: endDate
+        }
+      }
+    }
+    console.log({ whereClause })
+    const incomes = await getIncomesDb({ whereClause })
     return res.status(200).json({ message: 'successfully', data: incomes })
   } catch (err) {
     next(err)

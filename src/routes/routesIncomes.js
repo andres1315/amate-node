@@ -4,6 +4,7 @@ const routesIncomes = Router()
 
 routesIncomes
   .get('/', getIncomes)
+  .get('/year/:year/month/:month', getIncomes)
   .get('/currentMonth', getIncomesCurrentMonth)
   .post('/', createIncome)
   .delete('/:id', deleteIncome)
