@@ -2,6 +2,7 @@ import { getIncomesDb, createNewIncome, deleteIncomeService, updateIncomeService
 import { validateToken } from '../utils/utils.js'
 import { Op } from 'sequelize'
 import { sequelizeConnection } from '../database/db.js'
+import { getAccountingPeriodService } from '../services/accountingPeriodsService.js'
 const createIncome = async (req, res, next) => {
   try {
     const { customer, value, description } = req.body
@@ -10,6 +11,8 @@ const createIncome = async (req, res, next) => {
     if (!validateTolkenResult.success) return res.status(validateTolkenResult.status).json({ message: validateTolkenResult.message })
     if (!customer || !value || !description) return res.status(400).json({ message: 'customer and value are required', data: [] })
     const newIncome = { customer, value, description, userCreated: validateTolkenResult.decodedToken.id }
+    const hasAccountingPeriodOpen = await getAccountingPeriodService({ where: { open: true } })
+    if (!hasAccountingPeriodOpen.length) return res.status(400).json({ message: 'No accounting period open', data: [] })
     const newincomeDb = await createNewIncome({ paramCreate: newIncome })
     return res.status(201).json({ data: newincomeDb, message: 'successfully' })
   } catch (err) {
