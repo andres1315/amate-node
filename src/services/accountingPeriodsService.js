@@ -11,7 +11,12 @@ const createAccountingPeriodService = ({ paramsCreate }) => {
   return AccountingPeriod.create({ ...paramsCreate })
 }
 
+const updateAccountingPeriodService = ({ paramsUpdate, where }) => {
+  return AccountingPeriod.update({ ...paramsUpdate }, { where })
+}
+
 export {
   getAccountingPeriodService,
-  createAccountingPeriodService
+  createAccountingPeriodService,
+  updateAccountingPeriodService
 }
