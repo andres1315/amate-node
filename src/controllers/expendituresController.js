@@ -5,7 +5,7 @@ const getExpenditures = async (req, res, next) => {
   try {
     const authorization = req.get('authorization')
     const validateTokenResult = validateToken({ authorization })
-    if (!validateTokenResult.success) return res.status(400).json({ message: validateTokenResult.message })
+    if (!validateTokenResult.success) return res.status(401).json({ message: validateTokenResult.message })
     const expenditures = await getExpendituresDb()
     return res.status(200).json({ data: expenditures, message: 'success' })
   } catch (error) {
