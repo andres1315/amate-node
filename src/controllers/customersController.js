@@ -1,5 +1,5 @@
 import { sequelizeConnection } from '../database/db.js'
-import { createCustomerService, getAllCustomerServices } from '../services/customerServices.js'
+import { createCustomerService, getAllCustomerServices, updateCustomerService } from '../services/customerServices.js'
 import { validateToken } from '../utils/utils.js'
 
 const createCustomer = async (req, res, next) => {
@@ -29,7 +29,23 @@ const getAllCustomers = async (req, res, next) => {
   }
 }
 
+const updateCustomer = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const { name, number } = req.body
+    const whereClause = { id }
+    const paramsUpdate = { name, number: Number(number) }
+    console.log(paramsUpdate)
+    const customerUpdate = await updateCustomerService({ paramsUpdate, whereClause })
+    console.log(customerUpdate)
+    return res.status(200).json({ message: 'Cliente actualizado correctamente', success: true, data: customerUpdate })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export {
   createCustomer,
-  getAllCustomers
+  getAllCustomers,
+  updateCustomer
 }
