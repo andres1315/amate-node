@@ -12,7 +12,16 @@ const getAllCustomerServices = () => {
   return Customers.findAll()
 }
 
+const updateCustomerService = ({ paramsUpdate, whereClause, transaction = null }) => {
+  return Customers.update({
+    ...paramsUpdate
+  }, {
+    where: whereClause,
+    transaction
+  })
+}
 export {
   createCustomerService,
-  getAllCustomerServices
+  getAllCustomerServices,
+  updateCustomerService
 }
