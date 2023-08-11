@@ -1,5 +1,6 @@
+import { Op } from 'sequelize'
 import { sequelizeConnection } from '../database/db.js'
-import { createCustomerService, getAllCustomerServices, updateCustomerService } from '../services/customerServices.js'
+import { createCustomerService, filterCustomersServices, getAllCustomerServices, updateCustomerService } from '../services/customerServices.js'
 import { validateToken } from '../utils/utils.js'
 
 const createCustomer = async (req, res, next) => {
@@ -44,8 +45,21 @@ const updateCustomer = async (req, res, next) => {
   }
 }
 
+const filterCustomers = async (req, res, next) => {
+  try {
+    const { name } = req.query
+    const whereClause = {
+      name: { [Op.like]: `%${name}%` }
+    }
+    const resultCustomers = await filterCustomersServices({ whereClause })
+    return res.status(200).json({ message: 'Clientes obtenidos correctamente', success: true, data: resultCustomers })
+  } catch (error) {
+    next(error)
+  }
+}
 export {
   createCustomer,
   getAllCustomers,
-  updateCustomer
+  updateCustomer,
+  filterCustomers
 }
