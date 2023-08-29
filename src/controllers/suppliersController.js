@@ -1,5 +1,6 @@
-import { createSuppliersServices, getSuppliersServices } from '../services/suppliersServices.js'
+import { createSuppliersServices, filterSuppliersServices, getSuppliersServices } from '../services/suppliersServices.js'
 import { sequelizeConnection } from '../database/db.js'
+import { Op } from 'sequelize'
 const getSuppliers = async (req, res, next) => {
   try {
     const suppliers = await getSuppliersServices()
@@ -24,7 +25,18 @@ const createSuppliers = async (req, res, next) => {
   }
 }
 
+const filterSuppliers = async (req, res, next) => {
+  try {
+    const { name } = req.query
+    const foundSuppliers = await filterSuppliersServices({ clauseWhere: { name: { [Op.like]: `%${name}%` } } })
+    return res.status(200).json({ data: foundSuppliers, message: 'success' })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export {
   getSuppliers,
-  createSuppliers
+  createSuppliers,
+  filterSuppliers
 }

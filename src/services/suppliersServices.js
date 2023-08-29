@@ -12,7 +12,14 @@ const createSuppliersServices = ({ newSupplier }) => {
   return Suppliers.create(newSupplier)
 }
 
+const filterSuppliersServices = ({ clauseWhere }) => {
+  return Suppliers.findAll({
+    where: clauseWhere
+  })
+}
+
 export {
   getSuppliersServices,
-  createSuppliersServices
+  createSuppliersServices,
+  filterSuppliersServices
 }
