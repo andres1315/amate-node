@@ -8,7 +8,8 @@ const Expenditures = sequelizeConnection.define('expenditures', {
   value: { type: DataTypes.INTEGER, allowNull: false },
   supplier: { type: DataTypes.INTEGER, allowNull: false },
   state: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
-  userCreated: { type: DataTypes.INTEGER, allowNull: false }
+  userCreated: { type: DataTypes.INTEGER, allowNull: false },
+  isAccounted: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0, field: 'is_accounted' }
 
 }, {
   tableName: 'expenditures'

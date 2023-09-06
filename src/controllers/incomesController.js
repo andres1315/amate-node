@@ -1,4 +1,4 @@
-import { getIncomesDb, createNewIncome, deleteIncomeService, updateIncomeService } from '../services/IncomesServices.js'
+import { getIncomesDb, createNewIncome, deleteIncomeService, updateIncomeService, filterIncomesService } from '../services/IncomesServices.js'
 import { validateToken } from '../utils/utils.js'
 import { Op } from 'sequelize'
 import { sequelizeConnection } from '../database/db.js'
@@ -93,10 +93,26 @@ const updateIncome = async (req, res, next) => {
   }
 }
 
+const filterIncomes = async (req, res, next) => {
+  try {
+    const { month, year, isAccounted } = req.query
+    const clauseWhere = {
+      state: 1
+    }
+    if (month && year) clauseWhere.createdAt = { [Op.gte]: new Date(year, month, 1) }
+    if (isAccounted) clauseWhere.isAccounted = isAccounted
+    const resultIncomes = await filterIncomesService({ clauseWhere })
+    return res.status(200).json({ message: 'successfully', data: resultIncomes })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export {
   createIncome,
   getIncomes,
   getIncomesCurrentMonth,
   deleteIncome,
-  updateIncome
+  updateIncome,
+  filterIncomes
 }

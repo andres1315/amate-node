@@ -7,6 +7,7 @@ import { routesSupplier } from './routesSuppliers.js'
 import { validateToken } from '../utils/utils.js'
 import { routesAccountingPeriods } from './routesAccountingPeriods.js'
 import { handleErrors } from '../middlewares/handleErrors.js'
+import { statRoutes } from './statsRoutes.js'
 
 export const routes = (app) => {
   app.get('/', (req, res, next) => {
@@ -32,5 +33,6 @@ export const routes = (app) => {
   app.use('/api/customers', routesCustomers)
   app.use('/api/suppliers', verifyToken, routesSupplier)
   app.use('/api/accounting-periods', verifyToken, routesAccountingPeriods)
+  app.use('/api/stats', verifyToken, statRoutes)
   app.use(handleErrors)
 }

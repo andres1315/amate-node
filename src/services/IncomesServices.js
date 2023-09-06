@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize'
 import { Customers } from '../models/Customers.js'
 import { Incomes } from '../models/Incomes.js'
 
@@ -40,9 +41,29 @@ const updateIncomeService = ({ id, paramUpdate, transaction }) => {
   })
 }
 
+const filterIncomesService = ({ clauseWhere }) => {
+  return Incomes.findAll({
+    where: clauseWhere
+  })
+}
+
+const sumAllIncomes = () => {
+  return Incomes.findAll({
+    attributes: [
+      [Sequelize.fn('sum', Sequelize.col('value')), 'totalValue']
+    ],
+    where: {
+      state: 1
+    },
+    raw: true
+  })
+}
+
 export {
   getIncomesDb,
   createNewIncome,
   deleteIncomeService,
-  updateIncomeService
+  updateIncomeService,
+  filterIncomesService,
+  sumAllIncomes
 }
