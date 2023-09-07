@@ -1,8 +1,9 @@
 import { DataTypes } from 'sequelize'
-import { sequelizeConnection } from '../database/db.js'
-import { Suppliers } from './Suppliers.js'
 
-const Expenditures = sequelizeConnection.define('expenditures', {
+import { Suppliers } from './Suppliers.js'
+import { sequelizeConnectionPostgres } from '../database/postgres.js'
+
+const Expenditures = sequelizeConnectionPostgres.define('expenditures', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   description: { type: DataTypes.STRING, allowNull: false },
   value: { type: DataTypes.INTEGER, allowNull: false },

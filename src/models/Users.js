@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize'
-import { sequelizeConnection } from '../database/db.js'
+import { sequelizeConnectionPostgres } from '../database/postgres.js'
 
-const Users = sequelizeConnection.define('users', {
+const Users = sequelizeConnectionPostgres.define('users', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   first_name: { type: DataTypes.STRING, allowNull: false },
   last_name: { type: DataTypes.STRING, allowNull: false },

@@ -1,7 +1,8 @@
-import { sequelizeConnection } from '../database/db.js'
-import { DataTypes } from 'sequelize'
 
-export const AccountingPeriod = sequelizeConnection.define('accounting_period', {
+import { DataTypes } from 'sequelize'
+import { sequelizeConnectionPostgres } from '../database/postgres.js'
+
+export const AccountingPeriod = sequelizeConnectionPostgres.define('accounting_period', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true, allowNull: false },
   month: { type: DataTypes.INTEGER, allowNull: false },
   year: { type: DataTypes.INTEGER, allowNull: false },

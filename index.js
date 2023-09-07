@@ -3,8 +3,8 @@ import cors from 'cors'
 import http from 'http'
 import { routes } from './src/routes/routes.js'
 import { config } from './src/config.js'
-import { sequelizeConnection } from './src/database/db.js'
 import helmet from 'helmet'
+import { sequelizeConnectionPostgres } from './src/database/postgres.js'
 
 const app = express()
 app.use(express.json())
@@ -17,7 +17,7 @@ http.createServer(app).listen(config.port, () => {
 
 routes(app)
 try {
-  sequelizeConnection.authenticate()
+  sequelizeConnectionPostgres.authenticate()
   console.log('Connection has been established successfully.')
 } catch (error) {
   console.error('Unable to connect to the database:', error)

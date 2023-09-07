@@ -7,6 +7,7 @@ const loginUser = async (req, res, next) => {
     const { username, password } = req.body
     if (!username || !password) return res.status(400).json({ message: 'Username and password are required', data: [{ username, password }] })
     const user = await getUsersDb({ username })
+    console.log('value user ', user)
     const validatePassword = !user ? false : await bcrypt.compare(password, user.password)
     if (!(user && validatePassword)) return res.status(401).json({ message: 'invalid username or password', data: [] })
     const userForToken = { username: user.username, id: user.id }
