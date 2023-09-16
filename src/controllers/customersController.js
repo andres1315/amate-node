@@ -1,7 +1,7 @@
 import { Op } from 'sequelize'
-import { sequelizeConnection } from '../database/db.js'
 import { createCustomerService, filterCustomersServices, getAllCustomerServices, updateCustomerService } from '../services/customerServices.js'
 import { validateToken } from '../utils/utils.js'
+import { sequelizeConnectionPostgres } from '../database/postgres.js'
 
 const createCustomer = async (req, res, next) => {
   try {
@@ -10,7 +10,7 @@ const createCustomer = async (req, res, next) => {
     const validateTokenResult = validateToken({ authorization })
     if (!validateTokenResult.success) return res.status(validateTokenResult.status).json({ message: validateTokenResult.message, success: validateTokenResult.success })
     if (!name || !number) return res.status(400).json({ message: 'No se recibieron todos los campos requeridos', success: false })
-    const resultTransaction = sequelizeConnection.transaction(async (transaction) => {
+    const resultTransaction = sequelizeConnectionPostgres.transaction(async (transaction) => {
       const newCustomer = { name, number: Number(number) }
       const customerCreated = await createCustomerService({ newCustomer, transaction })
       return customerCreated

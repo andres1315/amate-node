@@ -8,7 +8,3 @@ const sequelizeConnection = new Sequelize(config.dbName, config.dbUser, config.d
   timezone: '-05:00',
   dialectModule: mysql2
 })
-
-export {
-  sequelizeConnection
-}
