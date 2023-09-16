@@ -1,8 +1,8 @@
 import { getIncomesDb, createNewIncome, deleteIncomeService, updateIncomeService, filterIncomesService } from '../services/IncomesServices.js'
 import { validateToken } from '../utils/utils.js'
 import { Op } from 'sequelize'
-import { sequelizeConnection } from '../database/db.js'
 import { getAccountingPeriodService } from '../services/accountingPeriodsService.js'
+import { sequelizeConnectionPostgres } from '../database/postgres.js'
 const createIncome = async (req, res, next) => {
   try {
     const { customer, value, description } = req.body
@@ -70,7 +70,7 @@ const getIncomesCurrentMonth = async (req, res, next) => {
 const deleteIncome = async (req, res, next) => {
   try {
     const { id } = req.params
-    const resultTransaction = await sequelizeConnection.transaction(async t => {
+    const resultTransaction = await sequelizeConnectionPostgres.transaction(async t => {
       await deleteIncomeService({ id, transaction: t })
       return true
     })
@@ -84,7 +84,7 @@ const updateIncome = async (req, res, next) => {
     const { id } = req.params
     const { value, description } = req.body
     if (!id || !value || !description) return res.status(400).json({ message: 'id, value and description are required', data: [] })
-    const resultTransaction = await sequelizeConnection.transaction(async t => {
+    const resultTransaction = await sequelizeConnectionPostgres.transaction(async t => {
       return await updateIncomeService({ id, paramUpdate: { value, description }, transaction: t })
     })
     return res.status(200).json({ message: 'successfully', data: resultTransaction })

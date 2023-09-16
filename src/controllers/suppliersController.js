@@ -1,6 +1,6 @@
 import { createSuppliersServices, filterSuppliersServices, getSuppliersServices } from '../services/suppliersServices.js'
-import { sequelizeConnection } from '../database/db.js'
 import { Op } from 'sequelize'
+import { sequelizeConnectionPostgres } from '../database/postgres.js'
 const getSuppliers = async (req, res, next) => {
   try {
     const suppliers = await getSuppliersServices()
@@ -14,7 +14,7 @@ const createSuppliers = async (req, res, next) => {
   try {
     const { name, userId } = req.body
     if (!name) return res.status(400).json({ message: 'No se recibieron todos los campos requeridos' })
-    const resultTransaction = await sequelizeConnection.transaction(async t => {
+    const resultTransaction = await sequelizeConnectionPostgres.transaction(async t => {
       const newSupplier = { name, userCreated: userId }
       const supplier = await createSuppliersServices({ newSupplier })
       return supplier
