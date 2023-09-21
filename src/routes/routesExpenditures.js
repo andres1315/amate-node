@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { createExpenditures, getExpenditures, getExpendituresCurrentMonth } from '../controllers/expendituresController.js'
+import { createExpenditures, getExpenditures, getExpendituresFilter } from '../controllers/expendituresController.js'
 const routesExpenditures = Router()
 
 routesExpenditures
   .get('/', getExpenditures)
-  .get('/currentMonth', getExpendituresCurrentMonth)
+  .get('/filter', getExpendituresFilter)
   .post('/', createExpenditures)
 
 export {

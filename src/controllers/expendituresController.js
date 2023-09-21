@@ -1,6 +1,6 @@
 import { getExpendituresDb, createExpendituresDb } from '../services/expendituresServices.js'
 import { validateToken } from '../utils/utils.js'
-import { Op } from 'sequelize'
+import { Op, Sequelize } from 'sequelize'
 const getExpenditures = async (req, res, next) => {
   try {
     const authorization = req.get('authorization')
@@ -13,14 +13,19 @@ const getExpenditures = async (req, res, next) => {
   }
 }
 
-const getExpendituresCurrentMonth = async (req, res, next) => {
+const getExpendituresFilter = async (req, res, next) => {
   try {
     const authorization = req.get('authorization')
+    const { year, month } = req.query
     const validateTokenResult = validateToken({ authorization })
     if (!validateTokenResult.success) return res.status(400).json({ message: validateTokenResult.message })
-    const whereClause = {
-      createdAt: {
-        [Op.gte]: new Date(new Date().getFullYear(), new Date().getMonth(), 1)
+    const whereClause = { state: 1 }
+    if (year && month) {
+      // postgres
+      const firstDayMonth = new Date(year, month - 1, 1)
+      const lastDayMonth = new Date(year, month, 0, 23, 59, 59)
+      whereClause.createdAt = {
+        [Op.between]: [firstDayMonth, lastDayMonth]
       }
     }
     const expenditures = await getExpendituresDb({ whereClause })
@@ -49,5 +54,5 @@ const createExpenditures = async (req, res, next) => {
 export {
   createExpenditures,
   getExpenditures,
-  getExpendituresCurrentMonth
+  getExpendituresFilter
 }

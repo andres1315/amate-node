@@ -28,7 +28,7 @@ const createSuppliers = async (req, res, next) => {
 const filterSuppliers = async (req, res, next) => {
   try {
     const { name } = req.query
-    const foundSuppliers = await filterSuppliersServices({ clauseWhere: { name: { [Op.like]: `%${name}%` } } })
+    const foundSuppliers = await filterSuppliersServices({ clauseWhere: { name: { [Op.iLike]: `%${name}%` } } })
     return res.status(200).json({ data: foundSuppliers, message: 'success' })
   } catch (error) {
     next(error)

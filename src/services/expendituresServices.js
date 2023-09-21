@@ -3,6 +3,7 @@ import { Expenditures } from '../models/Expenditures.js'
 import { Suppliers } from '../models/Suppliers.js'
 
 const getExpendituresDb = ({ whereClause = {} } = {}) => {
+  console.log(whereClause)
   return Expenditures.findAll({
     where: {
       state: 1,

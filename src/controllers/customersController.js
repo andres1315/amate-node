@@ -48,9 +48,7 @@ const updateCustomer = async (req, res, next) => {
 const filterCustomers = async (req, res, next) => {
   try {
     const { name } = req.query
-    const whereClause = {
-      name: { [Op.like]: `%${name}%` }
-    }
+    const whereClause = { name: { [Op.iLike]: `%${name}%` } }
     const resultCustomers = await filterCustomersServices({ whereClause })
     return res.status(200).json({ message: 'Clientes obtenidos correctamente', success: true, data: resultCustomers })
   } catch (error) {
