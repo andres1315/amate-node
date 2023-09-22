@@ -96,12 +96,18 @@ const updateIncome = async (req, res, next) => {
 const filterIncomes = async (req, res, next) => {
   try {
     const { month, year, isAccounted } = req.query
-    const clauseWhere = {
-      state: 1
+    const whereClause = {
     }
-    if (month && year) clauseWhere.createdAt = { [Op.gte]: new Date(year, month, 1) }
-    if (isAccounted) clauseWhere.isAccounted = isAccounted
-    const resultIncomes = await filterIncomesService({ clauseWhere })
+    if (year && month) {
+      // postgres
+      const firstDayMonth = new Date(year, month - 1, 1)
+      const lastDayMonth = new Date(year, month, 0, 23, 59, 59)
+      whereClause.createdAt = {
+        [Op.between]: [firstDayMonth, lastDayMonth]
+      }
+    }
+    if (isAccounted) whereClause.isAccounted = isAccounted
+    const resultIncomes = await getIncomesDb({ whereClause })
     return res.status(200).json({ message: 'successfully', data: resultIncomes })
   } catch (error) {
     next(error)
