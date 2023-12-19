@@ -9,8 +9,11 @@ import { sequelizeConnectionPostgres } from './src/database/postgres.js'
 const app = express()
 app.use(express.json())
 app.use(helmet())
-app.use(cors())
-
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Access-Control-Allow-Origin'] // Asegúrate de incluir 'Access-Control-Allow-Origin'
+}))
 http.createServer(app).listen(config.port, () => {
   console.log(`Server is running on port ${config.port}`)
 })
